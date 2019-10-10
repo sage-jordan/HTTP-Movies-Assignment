@@ -7,6 +7,8 @@ class UpdateMovie extends React.Component{
         this.state = {
             movie: null
         }
+        console.log(props);
+
     }
 
     componentDidMount(id){ // Not sure how to pass props.id into here

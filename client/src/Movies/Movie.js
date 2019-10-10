@@ -2,6 +2,7 @@ import React from "react";
 import axios from "axios";
 import MovieCard from "./MovieCard";
 import UpdateMovie from './UpdateMovie';
+import { Link } from 'react-router-dom';
 
 
 export default class Movie extends React.Component {
@@ -34,10 +35,6 @@ export default class Movie extends React.Component {
     addToSavedList(this.state.movie);
   };
 
-  updateMovie = () => {
-    this.render(<UpdateMovie id={this.state.movie.id} fetchMovie={this.fetchMovie}/>)
-  };
-
   render() {
     if (!this.state.movie) {
       return <div>Loading movie information...</div>;
@@ -49,9 +46,7 @@ export default class Movie extends React.Component {
         <div className="save-button" onClick={this.saveMovie}>
           Save
         </div>
-        <div className="update-button" onClick={this.updateMovie}>
-          Update Movie
-        </div>
+        <Link to={`/update-movie/${id}`} className="update-button" />
       </div>
     );
   }
