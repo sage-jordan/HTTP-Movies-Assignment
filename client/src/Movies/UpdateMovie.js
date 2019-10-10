@@ -5,13 +5,11 @@ class UpdateMovie extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            movie: null
+            //Spread props through state
         }
-        console.log(props);
-
     }
 
-    componentDidMount(id){ // Not sure how to pass props.id into here
+    componentDidMount(id){ 
         this.fetchMovie(id);
     };
 
@@ -22,7 +20,7 @@ class UpdateMovie extends React.Component{
         });
     };
 
-    updateMovie = (id, updatedQuote) => { // Where should i put UpdatedQuote? State?
+    updateMovie = (id, updatedQuote) => { 
         axios
             .put(`http://localhost:5000/api/movies/${id}`)
             .then(res => this.setState({ movie: res.data }))

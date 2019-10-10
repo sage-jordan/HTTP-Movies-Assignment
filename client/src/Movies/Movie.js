@@ -47,9 +47,9 @@ export default class Movie extends React.Component {
         <MovieCard movie={this.state.movie} />
         <div className="save-button" onClick={this.saveMovie}>
           Save
-        </div>
-        <Link to={`/update-movie/${id}`} className="update-button" >Update Movie</Link>
-      </div>
+        </div> 
+        <Link to={`/update-movie/${id}`} props={id, this.fetchMovie} className="update-button" >Update Movie</Link>
+      </div> // I don't think passing props through link works?
     );
   }
 }
