@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 import MovieCard from "./MovieCard";
-import UpdateMovie from './Movies/UpdateMovie';
+import UpdateMovie from './UpdateMovie';
 
 
 export default class Movie extends React.Component {
