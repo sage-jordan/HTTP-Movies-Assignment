@@ -40,13 +40,15 @@ export default class Movie extends React.Component {
       return <div>Loading movie information...</div>;
     }
 
+    const id = this.props.match.params.id;
+
     return (
       <div className="save-wrapper">
         <MovieCard movie={this.state.movie} />
         <div className="save-button" onClick={this.saveMovie}>
           Save
         </div>
-        <Link to={`/update-movie/${id}`} className="update-button" />
+        <Link to={`/update-movie/${id}`} className="update-button" >Update Movie</Link>
       </div>
     );
   }
