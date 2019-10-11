@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import SuccessMessage from './SuccessMessage';
 
 class UpdateMovie extends React.Component{
     constructor(props){
@@ -11,6 +12,7 @@ class UpdateMovie extends React.Component{
                 metascore: '',
                 stars: []
             },
+            successMessage: null
         }
     }
 
@@ -20,6 +22,7 @@ class UpdateMovie extends React.Component{
 
     handleChange = e => {
         this.setState({
+            ...this.state,
             updatedMovie: {
                 ...this.state.updatedMovie,
                 [e.target.name]: e.target.value
@@ -32,7 +35,7 @@ class UpdateMovie extends React.Component{
         axios
           .get(`http://localhost:5000/api/movies/${this.props.match.params.id}`)
           .then(res => {
-            this.setState({ updatedMovie: res.data })
+            this.setState({ ...this.state, updatedMovie: res.data })
             console.log(this.state)
           })
           .catch(err => console.log(err.response));
@@ -43,10 +46,11 @@ class UpdateMovie extends React.Component{
         axios
             .put(`http://localhost:5000/api/movies/${this.props.match.params.id}`, this.state.updatedMovie)
             .then(res =>  {
-                this.setState({ updatedMovie: res.data });
+                this.setState({ ...this.state, updatedMovie: res.data });
                 console.log(res.data);
             })
             .catch(err => console.log(err.response));
+        this.setState({ ...UpdatedMovie, successMessage: 'Movie Successfully Updated!' })
     };
 
     render() {
@@ -77,6 +81,11 @@ class UpdateMovie extends React.Component{
                     />
                     <button onClick={this.updateMovie}>Update</button>
                 </form>
+                {() => {
+                    if(this.state.successMessage){
+                        <SuccessMessage message={this.state.successMessage} /> 
+                    }
+                }}
             </div>
         )
     }
