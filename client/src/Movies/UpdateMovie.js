@@ -27,7 +27,7 @@ class UpdateMovie extends React.Component{
         });
         console.log(this.state.updatedMovie);
     };
-
+ 
     fetchMovie = () => {
         axios
           .get(`http://localhost:5000/api/movies/${this.props.match.params.id}`)
