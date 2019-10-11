@@ -48,7 +48,7 @@ export default class Movie extends React.Component {
         <div className="save-button" onClick={this.saveMovie}>
           Save
         </div> 
-        <Link to={`/update-movie/${id}`} props={id, this.fetchMovie} className="update-button" >Update Movie</Link>
+        <Link to={{pathname: `/update-movie/${id}`, state: id.toString()}} className="update-button" >Update Movie</Link>
       </div> 
     );
   }

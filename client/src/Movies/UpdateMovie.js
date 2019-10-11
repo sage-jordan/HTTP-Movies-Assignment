@@ -5,11 +5,14 @@ class UpdateMovie extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            updatedMovie: null,
+            updatedMovie: {
+                title: '',
+                director: '',
+                metascore: '',
+                stars: []
+            },
             movie: null
-            //Spread props through state
         }
-        console.log("props updatedMovie.js: ", props)
     }
 
     componentDidMount(){ 
@@ -23,19 +26,27 @@ class UpdateMovie extends React.Component{
                 [e.target.name]: e.target.value
             }
         });
+        console.log(this.state.updatedMovie);
     };
 
-    fetchMovie = id => {
+    fetchMovie = () => {
         axios
-          .get(`http://localhost:5000/api/movies/${id}`)
-          .then(res => this.setState({ movie: res.data }))
+          .get(`http://localhost:5000/api/movies/${this.props.match.params.id}`)
+          .then(res => {
+            this.setState({ movie: res.data, updatedMovie: res.data })
+            console.log(this.state.movie)
+          })
           .catch(err => console.log(err.response));
       };
 
-    updateMovie = (id, updatedMovie) => { 
+    updateMovie = (id) => { 
+        console.log(this.state.updatedMovie)
         axios
-            .put(`http://localhost:5000/api/movies/${id}`)
-            .then(res => this.setState({ movie: res.data }))
+            .put(`http://localhost:5000/api/movies/${id}`, this.state.updatedMovie)
+            .then(res =>  {
+                this.setState({ updatedMovie: this.state.updatedMovie, movie: res.data });
+                console.log(this.state);
+            })
             .catch(err => console.log(err.response));
     };
 
@@ -47,22 +58,22 @@ class UpdateMovie extends React.Component{
                     <input
                         type="text"
                         name="title"
-                        placeholder={this.state.movie.title}
+                        placeholder={this.state.updatedMovie.title}
                         onChange={this.handleChange}
                     />
                     <input
                         type="text"
                         name="director"
-                        placeholder={this.state.movie.director}
+                        placeholder={this.state.updatedMovie.director}
                         onChange={this.handleChange}
                     />
                     <input
                         type="text"
                         name="metascore"
-                        placeholder={this.state.movie.metascore}
+                        placeholder={this.state.updatedMovie.metascore}
                         onChange={this.handleChange}
                     />
-                    <button type="submit">Update</button>
+                    <button onClick={this.updateMovie}>Update</button>
                 </form>
             </div>
         )
