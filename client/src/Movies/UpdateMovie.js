@@ -41,19 +41,21 @@ class UpdateMovie extends React.Component{
           .catch(err => console.log(err.response));
       };
 
-    updateMovie = () => { 
+    updateMovie = e => { 
+        e.preventDefault();
         console.log(this.state.updatedMovie);
         axios
             .put(`http://localhost:5000/api/movies/${this.props.match.params.id}`, this.state.updatedMovie)
             .then(res =>  {
-                this.setState({ ...this.state, updatedMovie: res.data });
-                console.log(res.data);
+                this.setState({ successMessage: 'Movie Successfully Updated!', updatedMovie: res.data });
+                console.log(res.data, "SuccessMessage:", this.state.successMessage);
             })
             .catch(err => console.log(err.response));
-        this.setState({ ...UpdatedMovie, successMessage: 'Movie Successfully Updated!' })
     };
 
     render() {
+
+
         return (
             <div className="update-form">
                 <h2>Update Movie</h2>
@@ -81,11 +83,11 @@ class UpdateMovie extends React.Component{
                     />
                     <button onClick={this.updateMovie}>Update</button>
                 </form>
-                {() => {
-                    if(this.state.successMessage){
-                        <SuccessMessage message={this.state.successMessage} /> 
-                    }
-                }}
+                {this.state.successMessage ? (
+                    <SuccessMessage message={this.state.successMessage.toString()} />
+                ) : (
+                    null
+                )}
             </div>
         )
     }
