@@ -20,8 +20,8 @@ class UpdateMovie extends React.Component{
 
     handleChange = e => {
         this.setState({
-            ...this.state,
             updatedMovie: {
+                ...this.state.updatedMovie,
                 [e.target.name]: e.target.value
             }
         });
