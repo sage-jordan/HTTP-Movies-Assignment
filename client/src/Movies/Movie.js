@@ -1,8 +1,7 @@
 import React from "react";
 import axios from "axios";
 import MovieCard from "./MovieCard";
-import UpdateMovie from './UpdateMovie';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 
 
 export default class Movie extends React.Component {
@@ -17,7 +16,7 @@ export default class Movie extends React.Component {
     this.fetchMovie(this.props.match.params.id);
   }
 
-  componentWillReceiveProps(newProps) {
+  componentDidUpdate(newProps) {
     if (this.props.match.params.id !== newProps.match.params.id) {
       this.fetchMovie(newProps.match.params.id);
     }
@@ -35,11 +34,17 @@ export default class Movie extends React.Component {
     addToSavedList(this.state.movie);
   };
 
+  redirect = () => {
+    this.props.history.push(`/`);
+    document.location.reload(true);
+  };
+
   deleteMovie = () => {
     axios
-      .delete(`http://localhost:5000/api/movies/${id}`)
-      .then(res => this.setState({ movie: res.data }))
+      .delete(`http://localhost:5000/api/movies/${this.props.match.params.id}`)
+      .then(res => console.log(res))
       .catch(err => console.log(err));
+    this.redirect();
   }
 
   render() {
