@@ -5,30 +5,38 @@ class UpdateMovie extends React.Component{
     constructor(props){
         super(props);
         this.state = {
+            updatedMovie: null,
+            movie: null
             //Spread props through state
         }
+        console.log("props updatedMovie.js: ", props)
     }
 
-    componentDidMount(id){ 
-        this.fetchMovie(id);
+    componentDidMount(){ 
+        this.fetchMovie(this.props.match.params.id);
     };
 
     handleChange = e => {
         this.setState({
-            ...this.state.movie,
-            [e.target.name]: e.target.value
+            ...this.state,
+            updatedMovie: {
+                [e.target.name]: e.target.value
+            }
         });
     };
 
-    updateMovie = (id, updatedQuote) => { 
+    fetchMovie = id => {
+        axios
+          .get(`http://localhost:5000/api/movies/${id}`)
+          .then(res => this.setState({ movie: res.data }))
+          .catch(err => console.log(err.response));
+      };
+
+    updateMovie = (id, updatedMovie) => { 
         axios
             .put(`http://localhost:5000/api/movies/${id}`)
             .then(res => this.setState({ movie: res.data }))
             .catch(err => console.log(err.response));
-    };
-
-    fetchMovie = id => {
-        this.props.fetchMovie(id);
     };
 
     render() {
@@ -39,27 +47,22 @@ class UpdateMovie extends React.Component{
                     <input
                         type="text"
                         name="title"
-                        placeholder="Title"
+                        placeholder={this.state.movie.title}
                         onChange={this.handleChange}
                     />
                     <input
                         type="text"
-                        name="title"
-                        placeholder="Title"
+                        name="director"
+                        placeholder={this.state.movie.director}
                         onChange={this.handleChange}
                     />
                     <input
                         type="text"
-                        name="title"
-                        placeholder="Title"
+                        name="metascore"
+                        placeholder={this.state.movie.metascore}
                         onChange={this.handleChange}
                     />
-                    <input
-                        type="text"
-                        name="title"
-                        placeholder="Title"
-                        onChange={this.handleChange}
-                    />
+                    <button type="submit">Update</button>
                 </form>
             </div>
         )

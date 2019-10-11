@@ -7,17 +7,9 @@ import UpdateMovie from './Movies/UpdateMovie';
 
 const App = () => {
   const [savedList, setSavedList] = useState([]);
-  const [updatedMovie, setUpdatedMovie] = useState({});
 
   const addToSavedList = movie => {
     setSavedList([...savedList, movie]);
-  };
-
-  const updateMovieState = movie => {
-    setUpdatedMovie({
-      ...updatedMovie,
-      movie
-    });
   };
 
   return (
@@ -33,7 +25,7 @@ const App = () => {
       <Route 
         path="/update-movie/:id"
         render={props => {  //props.id doesn't work here
-          return <UpdateMovie id={props.id} updateMovieState={updateMovieState} updatedMovie={updatedMovie} />;
+          return <UpdateMovie {...props} />;
         }}
       />
     </>
