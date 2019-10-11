@@ -11,7 +11,6 @@ class UpdateMovie extends React.Component{
                 metascore: '',
                 stars: []
             },
-            movie: null
         }
     }
 
@@ -33,19 +32,19 @@ class UpdateMovie extends React.Component{
         axios
           .get(`http://localhost:5000/api/movies/${this.props.match.params.id}`)
           .then(res => {
-            this.setState({ movie: res.data, updatedMovie: res.data })
-            console.log(this.state.movie)
+            this.setState({ updatedMovie: res.data })
+            console.log(this.state)
           })
           .catch(err => console.log(err.response));
       };
 
-    updateMovie = (id) => { 
-        console.log(this.state.updatedMovie)
+    updateMovie = () => { 
+        console.log(this.state.updatedMovie);
         axios
-            .put(`http://localhost:5000/api/movies/${id}`, this.state.updatedMovie)
+            .put(`http://localhost:5000/api/movies/${this.props.match.params.id}`, this.state.updatedMovie)
             .then(res =>  {
-                this.setState({ updatedMovie: this.state.updatedMovie, movie: res.data });
-                console.log(this.state);
+                this.setState({ ...this.state, movie: res.data });
+                console.log(res.data);
             })
             .catch(err => console.log(err.response));
     };
