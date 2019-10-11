@@ -49,7 +49,7 @@ export default class Movie extends React.Component {
           Save
         </div> 
         <Link to={`/update-movie/${id}`} props={id, this.fetchMovie} className="update-button" >Update Movie</Link>
-      </div> // I don't think passing props through link works?
+      </div> 
     );
   }
 }
