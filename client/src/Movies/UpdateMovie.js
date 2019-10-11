@@ -43,7 +43,7 @@ class UpdateMovie extends React.Component{
         axios
             .put(`http://localhost:5000/api/movies/${this.props.match.params.id}`, this.state.updatedMovie)
             .then(res =>  {
-                this.setState({ ...this.state, movie: res.data });
+                this.setState({ updatedMovie: res.data });
                 console.log(res.data);
             })
             .catch(err => console.log(err.response));
@@ -59,18 +59,21 @@ class UpdateMovie extends React.Component{
                         name="title"
                         placeholder={this.state.updatedMovie.title}
                         onChange={this.handleChange}
+                        value={this.state.updatedMovie.title}
                     />
                     <input
                         type="text"
                         name="director"
                         placeholder={this.state.updatedMovie.director}
                         onChange={this.handleChange}
+                        value={this.state.updatedMovie.director}
                     />
                     <input
                         type="text"
                         name="metascore"
                         placeholder={this.state.updatedMovie.metascore}
                         onChange={this.handleChange}
+                        value={this.state.updatedMovie.metascore}
                     />
                     <button onClick={this.updateMovie}>Update</button>
                 </form>
