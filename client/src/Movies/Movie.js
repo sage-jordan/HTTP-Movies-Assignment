@@ -1,14 +1,13 @@
 import React from "react";
 import axios from "axios";
 import MovieCard from "./MovieCard";
-import { Link, Redirect } from 'react-router-dom';
-
+import { Link, Redirect } from "react-router-dom";
 
 export default class Movie extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      movie: null,
+      movie: null
     };
   }
 
@@ -39,14 +38,14 @@ export default class Movie extends React.Component {
     document.location.reload(true);
   };
 
-  deleteMovie = (e) => {
+  deleteMovie = e => {
     e.preventDefault();
     axios
       .delete(`http://localhost:5000/api/movies/${this.props.match.params.id}`)
       .then(res => console.log(res))
       .catch(err => console.log(err));
     this.redirect();
-  }
+  };
 
   render() {
     if (!this.state.movie) {
@@ -60,14 +59,17 @@ export default class Movie extends React.Component {
         <MovieCard movie={this.state.movie} />
         <div className="save-button" onClick={this.saveMovie}>
           Save
-        </div> 
-        <Link to={{pathname: `/update-movie/${id}`, state: id.toString()}} className="update-button" >
+        </div>
+        <Link
+          to={{ pathname: `/update-movie/${id}` }}
+          className="update-button"
+        >
           Update Movie
         </Link>
         <div className="delete-button" onClick={this.deleteMovie}>
           Delete
-        </div> 
-      </div> 
+        </div>
+      </div>
     );
   }
 }
